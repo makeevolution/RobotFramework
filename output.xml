@@ -1,64 +1,1723 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.2.2 (Python 3.9.0 on win32)" generated="20210302 17:42:42.509" rpa="false">
-<suite id="s1" name="Test Selenium" source="C:\Users\aldo-\OneDrive\job\RobotFramework\test_selenium.robot">
-<test id="s1-t1" name="TC1:dgdg">
-<kw name="Open Browser" library="SeleniumLibrary">
-<doc>Opens a new browser instance to the optional ``url``.</doc>
+<robot generator="Robot 3.2.2 (Python 3.9.0 on win32)" generated="20210303 15:30:28.876" rpa="false">
+<suite id="s1" name="RF spotify" source="C:\Users\aldo-\OneDrive\job\RobotFramework\RF_spotify.robot">
+<test id="s1-t1" name="Test case 1: A user transverses through all valid states and successfully added new song to new playlist">
+<kw name="Create All Endpoints and User supplies their User ID">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
 <arguments>
-<arg>https://playtictactoe.org/</arg>
-<arg>chrome</arg>
+<arg>spotifyAddNewPlaylist</arg>
+<arg>https://api.spotify.com/v1/users/${user_ID}</arg>
+<arg>disable_warnings=1</arg>
 </arguments>
-<msg timestamp="20210302 17:42:42.848" level="INFO">Opening browser 'chrome' to base url 'https://playtictactoe.org/'.</msg>
-<status status="PASS" starttime="20210302 17:42:42.848" endtime="20210302 17:42:45.620"></status>
+<msg timestamp="20210303 15:30:29.203" level="INFO">Creating Session using : alias=spotifyAddNewPlaylist, url=https://api.spotify.com/v1/users/makeevolution, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:29.203" endtime="20210303 15:30:29.203"></status>
 </kw>
-<kw name="Get Element Attribute" library="SeleniumLibrary">
-<doc>Returns the value of ``attribute`` from the element ``locator``.</doc>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
 <arguments>
-<arg>xpath://html/body/div[4]/p[1]/span[4]</arg>
-<arg>innerHTML</arg>
+<arg>spotifyGetPlaylistList</arg>
+<arg>https://api.spotify.com/v1/users/${user_ID}/playlists</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:29.204" level="INFO">Creating Session using : alias=spotifyGetPlaylistList, url=https://api.spotify.com/v1/users/makeevolution/playlists, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:29.204" endtime="20210303 15:30:29.204"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifySearchSong</arg>
+<arg>https://api.spotify.com/v1</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:29.204" level="INFO">Creating Session using : alias=spotifySearchSong, url=https://api.spotify.com/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:29.204" endtime="20210303 15:30:29.204"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.203" endtime="20210303 15:30:29.204"></status>
+</kw>
+<kw name="User supplies corresponding User Token and add new playlist">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>name=${playlist_name}</arg>
+<arg>description=${playlist_name}</arg>
 </arguments>
 <assign>
-<var>${var}</var>
+<var>&amp;{data}</var>
 </assign>
-<msg timestamp="20210302 17:42:45.655" level="INFO">${var} = 0</msg>
-<status status="PASS" starttime="20210302 17:42:45.621" endtime="20210302 17:42:45.655"></status>
+<msg timestamp="20210303 15:30:29.206" level="INFO">&amp;{data} = { name=RobotFrameworkPlaylist | description=RobotFrameworkPlaylist }</msg>
+<status status="PASS" starttime="20210303 15:30:29.205" endtime="20210303 15:30:29.206"></status>
 </kw>
-<kw name="Log To Console" library="BuiltIn">
-<doc>Logs the given message to the console.</doc>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
 <arguments>
-<arg>${var}</arg>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=Bearer ${token}</arg>
 </arguments>
-<status status="PASS" starttime="20210302 17:42:45.656" endtime="20210302 17:42:45.657"></status>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20210303 15:30:29.206" level="INFO">&amp;{headers} = { Content-Type=application/json | Authorization=Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lU...</msg>
+<status status="PASS" starttime="20210303 15:30:29.206" endtime="20210303 15:30:29.206"></status>
 </kw>
-<status status="PASS" starttime="20210302 17:42:42.847" endtime="20210302 17:42:45.657" critical="yes"></status>
+<kw name="Post On Session" library="RequestsLibrary">
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>spotifyAddNewPlaylist</arg>
+<arg>/playlists</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${resp}</var>
+</assign>
+<msg timestamp="20210303 15:30:29.453" level="INFO">POST Request : url=https://api.spotify.com/v1/users/makeevolution/playlists 
+ path_url=/v1/users/makeevolution/playlists 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRiRuMhtDDWIExfB0TcGK_RuKx7cOR5O9NncBqiwdc7lPtEw8F9QQT6IuVYzJD17cS_dH6io3odkkYmfwJ_HH4_9fu9V-titpF_cmYDaQvAy6-', 'Content-Length': '75'} 
+ body=b'{"name": "RobotFrameworkPlaylist", "description": "RobotFrameworkPlaylist"}' 
+ </msg>
+<msg timestamp="20210303 15:30:29.453" level="INFO">POST Response : url=https://api.spotify.com/v1/users/makeevolution/playlists 
+ status=201, reason=Created 
+ headers={'content-type': 'application/json; charset=utf-8', 'cache-control': 'private, max-age=0', 'location': 'https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN', 'x-robots-tag': 'noindex, nofollow', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version, X-Cloud-Trace-Context, client-token, content-access-token', 'access-control-allow-methods': 'GET, POST, OPTIONS, PUT, DELETE, PATCH', 'access-control-allow-credentials': 'true', 'access-control-max-age': '604800', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'date': 'Wed, 03 Mar 2021 14:30:29 GMT', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
+ body={
+  "collaborative" : false,
+  "description" : "RobotFrameworkPlaylist",
+  "external_urls" : {
+    "spotify" : "https://open.spotify.com/playlist/6CT0MnKMuKICmzPsxuSXHN"
+  },
+  "followers" : {
+    "href" : null,
+    "total" : 0
+  },
+  "href" : "https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN",
+  "id" : "6CT0MnKMuKICmzPsxuSXHN",
+  "images" : [ ],
+  "name" : "RobotFrameworkPlaylist",
+  "owner" : {
+    "display_name" : "makeevolution",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/user/makeevolution"
+    },
+    "href" : "https://api.spotify.com/v1/users/makeevolution",
+    "id" : "makeevolution",
+    "type" : "user",
+    "uri" : "spotify:user:makeevolution"
+  },
+  "primary_color" : null,
+  "public" : true,
+  "snapshot_id" : "MSwwNzBlNjA0NDFlN2JlZTkwZjkyMjM3NDc5MjE4MzExZTkwNTZiYTJl",
+  "tracks" : {
+    "href" : "https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN/tracks",
+    "items" : [ ],
+    "limit" : 100,
+    "next" : null,
+    "offset" : 0,
+    "previous" : null,
+    "total" : 0
+  },
+  "type" : "playlist",
+  "uri" : "spotify:playlist:6CT0MnKMuKICmzPsxuSXHN"
+} 
+ </msg>
+<msg timestamp="20210303 15:30:29.454" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20210303 15:30:29.206" endtime="20210303 15:30:29.454"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.205" endtime="20210303 15:30:29.454"></status>
+</kw>
+<kw name="Check that newly added playlist is successfully added">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=Bearer ${token}</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20210303 15:30:29.455" level="INFO">&amp;{headers} = { Content-Type=application/json | Authorization=Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lU...</msg>
+<status status="PASS" starttime="20210303 15:30:29.454" endtime="20210303 15:30:29.455"></status>
+</kw>
+<kw name="Get On Session" library="RequestsLibrary">
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>spotifyAddNewPlaylist</arg>
+<arg>/playlists</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${all_playlists}</var>
+</assign>
+<msg timestamp="20210303 15:30:29.649" level="INFO">GET Request : url=https://api.spotify.com/v1/users/makeevolution/playlists 
+ path_url=/v1/users/makeevolution/playlists 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRiRuMhtDDWIExfB0TcGK_RuKx7cOR5O9NncBqiwdc7lPtEw8F9QQT6IuVYzJD17cS_dH6io3odkkYmfwJ_HH4_9fu9V-titpF_cmYDaQvAy6-'} 
+ body=None 
+ </msg>
+<msg timestamp="20210303 15:30:29.650" level="INFO">GET Response : url=https://api.spotify.com/v1/users/makeevolution/playlists 
+ status=200, reason=OK 
+ headers={'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=0', 'etag': '"MC-IjczZWE1MjkwNGRjNDhmY2UyYmIyM2EwY2QwYzIxODA5Ig=="', 'x-robots-tag': 'noindex, nofollow', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version, X-Cloud-Trace-Context, client-token, content-access-token', 'access-control-allow-methods': 'GET, POST, OPTIONS, PUT, DELETE, PATCH', 'access-control-allow-credentials': 'true', 'access-control-max-age': '604800', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'date': 'Wed, 03 Mar 2021 14:30:29 GMT', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
+ body={
+  "href" : "https://api.spotify.com/v1/users/makeevolution/playlists?offset=0&amp;limit=20",
+  "items" : [ {
+    "collaborative" : false,
+    "description" : "RobotFrameworkPlaylist",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/6CT0MnKMuKICmzPsxuSXHN"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN",
+    "id" : "6CT0MnKMuKICmzPsxuSXHN",
+    "images" : [ ],
+    "name" : "RobotFrameworkPlaylist",
+    "owner" : {
+      "display_name" : "makeevolution",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/makeevolution"
+      },
+      "href" : "https://api.spotify.com/v1/users/makeevolution",
+      "id" : "makeevolution",
+      "type" : "user",
+      "uri" : "spotify:user:makeevolution"
+    },
+    "primary_color" : null,
+    "public" : true,
+    "snapshot_id" : "Miw4NDk0YjI4YTNjOTA0YzczODlhYzIyYzJmNGQ4YWExNzlmM2QwNDVj",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN/tracks",
+      "total" : 0
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:6CT0MnKMuKICmzPsxuSXHN"
+  }, {
+    "collaborative" : false,
+    "description" : "The best of Foo Fighters, all in one place.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DX9Ozxs05KifN"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX9Ozxs05KifN",
+    "id" : "37i9dQZF1DX9Ozxs05KifN",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706f0000000314ff08493738857b674ecd0a",
+      "width" : null
+    } ],
+    "name" : "This Is Foo Fighters",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MTYxMjkyNTA1MCwwMDAwMDAxNzAwMDAwMTc3ODlkMzFkZmIwMDAwMDE3NjI1NGU1NGU2",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX9Ozxs05KifN/tracks",
+      "total" : 50
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DX9Ozxs05KifN"
+  }, {
+    "collaborative" : false,
+    "description" : "This is Frenna. The essential tracks, all in one playlist.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DZ06evO3KC2M8"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DZ06evO3KC2M8",
+    "id" : "37i9dQZF1DZ06evO3KC2M8",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://thisis-images.scdn.co/37i9dQZF1DZ06evO3KC2M8-large.jpg",
+      "width" : null
+    } ],
+    "name" : "This Is Frenna",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MjY5MTI2OTIsMDAwMDAwMDBiZTI5NzU4MDFhYzM2MDZiMzMyNGY1ZGRmM2RhMjcyMA==",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DZ06evO3KC2M8/tracks",
+      "total" : 51
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DZ06evO3KC2M8"
+  }, {
+    "collaborative" : false,
+    "description" : "Het beste en het nieuwste van Broederliefde!",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DX1crj0pJiTEg"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX1crj0pJiTEg",
+    "id" : "37i9dQZF1DX1crj0pJiTEg",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706f0000000320f32e8c620768007c1223a8",
+      "width" : null
+    } ],
+    "name" : "This Is Broederliefde",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MTYxNDc2MzQzNSwwMDAwMDAxZjAwMDAwMTc3Zjc2NmE3MzgwMDAwMDE3N2M1YjEwNTFk",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX1crj0pJiTEg/tracks",
+      "total" : 89
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DX1crj0pJiTEg"
+  }, {
+    "collaborative" : false,
+    "description" : "This is Idaly. The essential tracks, all in one playlist.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DZ06evO0VtPLw"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DZ06evO0VtPLw",
+    "id" : "37i9dQZF1DZ06evO0VtPLw",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://thisis-images.scdn.co/37i9dQZF1DZ06evO0VtPLw-large.jpg",
+      "width" : null
+    } ],
+    "name" : "This Is Idaly",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MjY5MTI2OTIsMDAwMDAwMDBjMWZjMTc0ZDY4NTJjZTA1MjVkMzk2YmJmYjlmMjVhMw==",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DZ06evO0VtPLw/tracks",
+      "total" : 50
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DZ06evO0VtPLw"
+  }, {
+    "collaborative" : false,
+    "description" : "NCTzens' go-to place for all things NCT.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DX7bgKEb1LOV6"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX7bgKEb1LOV6",
+    "id" : "37i9dQZF1DX7bgKEb1LOV6",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706f00000003d30166cb1a1d331ef975f66b",
+      "width" : null
+    } ],
+    "name" : "This Is NCT",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MTYxMzc1MTUzNiwwMDAwMDA3NTAwMDAwMTc3YmIxNjQ5YzcwMDAwMDE3NTFiYWIyZDNm",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX7bgKEb1LOV6/tracks",
+      "total" : 96
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DX7bgKEb1LOV6"
+  }, {
+    "collaborative" : false,
+    "description" : "All the festive faves to soundtrack your very merry Christmas!",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DWTCHbho2Bfok"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DWTCHbho2Bfok",
+    "id" : "37i9dQZF1DWTCHbho2Bfok",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706f00000003dc7eeb8d7988bd0df62b3e8c",
+      "width" : null
+    } ],
+    "name" : "Christmas Favourites",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MTYwNzkxOTI0MywwMDAwMDAxNjAwMDAwMTc2NWY3NDkyMmUwMDAwMDE2ZDE1M2E0OTAy",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DWTCHbho2Bfok/tracks",
+      "total" : 50
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DWTCHbho2Bfok"
+  }, {
+    "collaborative" : false,
+    "description" : "From Mainstreet U.S.A., to Frontierland, to Tomorrowland and Cars Land, there are some fond memories from the music around the parks.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/2NzLY9dK7zcQWerfHHzfed"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/2NzLY9dK7zcQWerfHHzfed",
+    "id" : "2NzLY9dK7zcQWerfHHzfed",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706c0000bebb115dfbc0d64fe761a91cdba6",
+      "width" : null
+    } ],
+    "name" : "Disneyland: Music Around the Parks",
+    "owner" : {
+      "display_name" : "Robbie T",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/1248827223"
+      },
+      "href" : "https://api.spotify.com/v1/users/1248827223",
+      "id" : "1248827223",
+      "type" : "user",
+      "uri" : "spotify:user:1248827223"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "NjIsZmY3OWRjNzVlZDFhZWFlNmE4NzhhZWM0OTVmNDkwY2M4OTcwYWMwMg==",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/2NzLY9dK7zcQWerfHHzfed/tracks",
+      "total" : 40
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:2NzLY9dK7zcQWerfHHzfed"
+  }, {
+    "collaborative" : false,
+    "description" : "De meest gestreamde artiesten van 2020 in Nederland. Cover: Snelle",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DWUSMfONeW98t"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DWUSMfONeW98t",
+    "id" : "37i9dQZF1DWUSMfONeW98t",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706f000000035c239dc7d52fe4e49666c36c",
+      "width" : null
+    } ],
+    "name" : "Top Artiesten 2020 NL",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : ... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg timestamp="20210303 15:30:29.650" level="INFO">${all_playlists} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210303 15:30:29.455" endtime="20210303 15:30:29.650"></status>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<doc>Returns a list containing given items.</doc>
+<assign>
+<var>@{list_of_playlists}</var>
+</assign>
+<msg timestamp="20210303 15:30:29.650" level="INFO">@{list_of_playlists} = [ ]</msg>
+<status status="PASS" starttime="20210303 15:30:29.650" endtime="20210303 15:30:29.650"></status>
+</kw>
+<kw name="${i} IN [ @{all_playlists.json()[&quot;items&quot;]} ]" type="for">
+<kw name="${i} = {'collaborative': False, 'description': 'RobotFrameworkPlaylist', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/6CT0MnKMuKICmzPsxuSXHN'}, 'href': 'https://api.spotify.com/v1/playlist..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.651" endtime="20210303 15:30:29.651"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.651" endtime="20210303 15:30:29.651"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'The best of Foo Fighters, all in one place.', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DX9Ozxs05KifN'}, 'href': 'https://api.sp..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.651" endtime="20210303 15:30:29.651"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.651" endtime="20210303 15:30:29.651"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'This is Frenna. The essential tracks, all in one playlist.', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DZ06evO3KC2M8'}, 'href': ..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.652" endtime="20210303 15:30:29.652"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.651" endtime="20210303 15:30:29.652"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'Het beste en het nieuwste van Broederliefde!', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DX1crj0pJiTEg'}, 'href': 'https://api.s..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.652" endtime="20210303 15:30:29.652"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.652" endtime="20210303 15:30:29.652"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'This is Idaly. The essential tracks, all in one playlist.', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DZ06evO0VtPLw'}, 'href': '..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.652" endtime="20210303 15:30:29.653"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.652" endtime="20210303 15:30:29.653"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': &quot;NCTzens' go-to place for all things NCT.&quot;, 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DX7bgKEb1LOV6'}, 'href': 'https://api.spoti..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.653" endtime="20210303 15:30:29.653"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.653" endtime="20210303 15:30:29.653"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'All the festive faves to soundtrack your very merry Christmas!', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DWTCHbho2Bfok'}, 'hre..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.653" endtime="20210303 15:30:29.654"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.653" endtime="20210303 15:30:29.654"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'From Mainstreet U.S.A., to Frontierland, to Tomorrowland and Cars Land, there are some fond memories from the music around the parks.', 'external_urls': {'spot..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.654" endtime="20210303 15:30:29.654"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.654" endtime="20210303 15:30:29.654"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'De meest gestreamde artiesten van 2020 in Nederland. Cover: Snelle', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DWUSMfONeW98t'}, ..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.654" endtime="20210303 15:30:29.654"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.654" endtime="20210303 15:30:29.654"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': '', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/795LAODy1N4CKEMO3VNV2e'}, 'href': 'https://api.spotify.com/v1/playlists/795LAODy1N4CKEMO3VNV..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.655" endtime="20210303 15:30:29.655"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.654" endtime="20210303 15:30:29.655"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': '', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/6QRL49gxMXIypsHiySzSeR'}, 'href': 'https://api.spotify.com/v1/playlists/6QRL49gxMXIypsHiySzS..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.655" endtime="20210303 15:30:29.655"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.655" endtime="20210303 15:30:29.655"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': '', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/47Jr3KRPewxFor01YTeeKg'}, 'href': 'https://api.spotify.com/v1/playlists/47Jr3KRPewxFor01YTee..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.655" endtime="20210303 15:30:29.656"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.655" endtime="20210303 15:30:29.656"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': '', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/0zATkeeI3xZsmKmejVw0VJ'}, 'href': 'https://api.spotify.com/v1/playlists/0zATkeeI3xZsmKmejVw0..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.656" endtime="20210303 15:30:29.657"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.656" endtime="20210303 15:30:29.657"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': '', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/6BIEOUl8p6hzapGlsLviPG'}, 'href': 'https://api.spotify.com/v1/playlists/6BIEOUl8p6hzapGlsLvi..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.657" endtime="20210303 15:30:29.657"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.657" endtime="20210303 15:30:29.657"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'Elke vrijdag nieuw: Nederlandse Top 40 Radio Hits - Radio Top 40 Hits - Q music Top 40 Muziek - Top Nederland - Radio Muziek - Top Hits Nederland - Nederlandse..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.657" endtime="20210303 15:30:29.658"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.657" endtime="20210303 15:30:29.658"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': '', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/20sXi7bOVxV6JDZss3QJdS'}, 'href': 'https://api.spotify.com/v1/playlists/20sXi7bOVxV6JDZss3QJ..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.658" endtime="20210303 15:30:29.658"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.658" endtime="20210303 15:30:29.658"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'This Is Travis Scott. The essential tracks, all in one playlist.', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DWUgX5cUT0GbU'}, 'h..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.658" endtime="20210303 15:30:29.659"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.658" endtime="20210303 15:30:29.659"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'Check out all the greatest tracks from Lauv right here.', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DX7Ubb192UfSb'}, 'href': 'ht..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.659" endtime="20210303 15:30:29.659"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.659" endtime="20210303 15:30:29.659"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': 'Luister en support muziek uit Nederland! #playlocal', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1DX1rUSgDt83Z2'}, 'href': 'https:..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.659" endtime="20210303 15:30:29.660"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.659" endtime="20210303 15:30:29.660"></status>
+</kw>
+<kw name="${i} = {'collaborative': False, 'description': '', 'external_urls': {'spotify': 'https://open.spotify.com/playlist/37i9dQZF1E4oYdZnlU6OJF'}, 'href': 'https://api.spotify.com/v1/playlists/37i9dQZF1E4oYdZnlU6O..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${i["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.660" endtime="20210303 15:30:29.660"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.660" endtime="20210303 15:30:29.660"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.650" endtime="20210303 15:30:29.660"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${list_of_playlists}</arg>
+<arg>${playlist_name}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:29.660" endtime="20210303 15:30:29.660"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.454" endtime="20210303 15:30:29.660"></status>
+</kw>
+<kw name="Add song to the playlist">
+<kw name="Get ID of newly added playlist">
+<assign>
+<var>${playlist_ID}</var>
+</assign>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Authorization=Bearer ${token}</arg>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20210303 15:30:29.662" level="INFO">&amp;{headers} = { Authorization=Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRi...</msg>
+<status status="PASS" starttime="20210303 15:30:29.661" endtime="20210303 15:30:29.662"></status>
+</kw>
+<kw name="Get On Session" library="RequestsLibrary">
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>spotifyGetPlaylistList</arg>
+<arg>/</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${resp_get_playlist}</var>
+</assign>
+<msg timestamp="20210303 15:30:29.900" level="INFO">GET Request : url=https://api.spotify.com/v1/users/makeevolution/playlists/ 
+ path_url=/v1/users/makeevolution/playlists/ 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRiRuMhtDDWIExfB0TcGK_RuKx7cOR5O9NncBqiwdc7lPtEw8F9QQT6IuVYzJD17cS_dH6io3odkkYmfwJ_HH4_9fu9V-titpF_cmYDaQvAy6-', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg timestamp="20210303 15:30:29.900" level="INFO">GET Response : url=https://api.spotify.com/v1/users/makeevolution/playlists/ 
+ status=200, reason=OK 
+ headers={'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=0', 'etag': '"MC-IjM2YjVlN2VjMDgxNzgwMmFhYmZhZDBiZjdiNGVjMmExIg=="', 'x-robots-tag': 'noindex, nofollow', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version, X-Cloud-Trace-Context, client-token, content-access-token', 'access-control-allow-methods': 'GET, POST, OPTIONS, PUT, DELETE, PATCH', 'access-control-allow-credentials': 'true', 'access-control-max-age': '604800', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'date': 'Wed, 03 Mar 2021 14:30:29 GMT', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
+ body={
+  "href" : "https://api.spotify.com/v1/users/makeevolution/playlists?offset=0&amp;limit=20",
+  "items" : [ {
+    "collaborative" : false,
+    "description" : "",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/6CT0MnKMuKICmzPsxuSXHN"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN",
+    "id" : "6CT0MnKMuKICmzPsxuSXHN",
+    "images" : [ ],
+    "name" : "RobotFrameworkPlaylist",
+    "owner" : {
+      "display_name" : "makeevolution",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/makeevolution"
+      },
+      "href" : "https://api.spotify.com/v1/users/makeevolution",
+      "id" : "makeevolution",
+      "type" : "user",
+      "uri" : "spotify:user:makeevolution"
+    },
+    "primary_color" : null,
+    "public" : true,
+    "snapshot_id" : "MSwwNzBlNjA0NDFlN2JlZTkwZjkyMjM3NDc5MjE4MzExZTkwNTZiYTJl",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN/tracks",
+      "total" : 0
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:6CT0MnKMuKICmzPsxuSXHN"
+  }, {
+    "collaborative" : false,
+    "description" : "The best of Foo Fighters, all in one place.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DX9Ozxs05KifN"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX9Ozxs05KifN",
+    "id" : "37i9dQZF1DX9Ozxs05KifN",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706f0000000314ff08493738857b674ecd0a",
+      "width" : null
+    } ],
+    "name" : "This Is Foo Fighters",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MTYxMjkyNTA1MCwwMDAwMDAxNzAwMDAwMTc3ODlkMzFkZmIwMDAwMDE3NjI1NGU1NGU2",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX9Ozxs05KifN/tracks",
+      "total" : 50
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DX9Ozxs05KifN"
+  }, {
+    "collaborative" : false,
+    "description" : "This is Frenna. The essential tracks, all in one playlist.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DZ06evO3KC2M8"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DZ06evO3KC2M8",
+    "id" : "37i9dQZF1DZ06evO3KC2M8",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://thisis-images.scdn.co/37i9dQZF1DZ06evO3KC2M8-large.jpg",
+      "width" : null
+    } ],
+    "name" : "This Is Frenna",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MjY5MTI2OTIsMDAwMDAwMDBiZTI5NzU4MDFhYzM2MDZiMzMyNGY1ZGRmM2RhMjcyMA==",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DZ06evO3KC2M8/tracks",
+      "total" : 51
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DZ06evO3KC2M8"
+  }, {
+    "collaborative" : false,
+    "description" : "Het beste en het nieuwste van Broederliefde!",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DX1crj0pJiTEg"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX1crj0pJiTEg",
+    "id" : "37i9dQZF1DX1crj0pJiTEg",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706f0000000320f32e8c620768007c1223a8",
+      "width" : null
+    } ],
+    "name" : "This Is Broederliefde",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MTYxNDc2MzQzNSwwMDAwMDAxZjAwMDAwMTc3Zjc2NmE3MzgwMDAwMDE3N2M1YjEwNTFk",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX1crj0pJiTEg/tracks",
+      "total" : 89
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DX1crj0pJiTEg"
+  }, {
+    "collaborative" : false,
+    "description" : "This is Idaly. The essential tracks, all in one playlist.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DZ06evO0VtPLw"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DZ06evO0VtPLw",
+    "id" : "37i9dQZF1DZ06evO0VtPLw",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://thisis-images.scdn.co/37i9dQZF1DZ06evO0VtPLw-large.jpg",
+      "width" : null
+    } ],
+    "name" : "This Is Idaly",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MjY5MTI2OTIsMDAwMDAwMDBjMWZjMTc0ZDY4NTJjZTA1MjVkMzk2YmJmYjlmMjVhMw==",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DZ06evO0VtPLw/tracks",
+      "total" : 50
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DZ06evO0VtPLw"
+  }, {
+    "collaborative" : false,
+    "description" : "NCTzens' go-to place for all things NCT.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DX7bgKEb1LOV6"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX7bgKEb1LOV6",
+    "id" : "37i9dQZF1DX7bgKEb1LOV6",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706f00000003d30166cb1a1d331ef975f66b",
+      "width" : null
+    } ],
+    "name" : "This Is NCT",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MTYxMzc1MTUzNiwwMDAwMDA3NTAwMDAwMTc3YmIxNjQ5YzcwMDAwMDE3NTFiYWIyZDNm",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DX7bgKEb1LOV6/tracks",
+      "total" : 96
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DX7bgKEb1LOV6"
+  }, {
+    "collaborative" : false,
+    "description" : "All the festive faves to soundtrack your very merry Christmas!",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DWTCHbho2Bfok"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DWTCHbho2Bfok",
+    "id" : "37i9dQZF1DWTCHbho2Bfok",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706f00000003dc7eeb8d7988bd0df62b3e8c",
+      "width" : null
+    } ],
+    "name" : "Christmas Favourites",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "MTYwNzkxOTI0MywwMDAwMDAxNjAwMDAwMTc2NWY3NDkyMmUwMDAwMDE2ZDE1M2E0OTAy",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DWTCHbho2Bfok/tracks",
+      "total" : 50
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:37i9dQZF1DWTCHbho2Bfok"
+  }, {
+    "collaborative" : false,
+    "description" : "From Mainstreet U.S.A., to Frontierland, to Tomorrowland and Cars Land, there are some fond memories from the music around the parks.",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/2NzLY9dK7zcQWerfHHzfed"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/2NzLY9dK7zcQWerfHHzfed",
+    "id" : "2NzLY9dK7zcQWerfHHzfed",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706c0000bebb115dfbc0d64fe761a91cdba6",
+      "width" : null
+    } ],
+    "name" : "Disneyland: Music Around the Parks",
+    "owner" : {
+      "display_name" : "Robbie T",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/1248827223"
+      },
+      "href" : "https://api.spotify.com/v1/users/1248827223",
+      "id" : "1248827223",
+      "type" : "user",
+      "uri" : "spotify:user:1248827223"
+    },
+    "primary_color" : null,
+    "public" : false,
+    "snapshot_id" : "NjIsZmY3OWRjNzVlZDFhZWFlNmE4NzhhZWM0OTVmNDkwY2M4OTcwYWMwMg==",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/playlists/2NzLY9dK7zcQWerfHHzfed/tracks",
+      "total" : 40
+    },
+    "type" : "playlist",
+    "uri" : "spotify:playlist:2NzLY9dK7zcQWerfHHzfed"
+  }, {
+    "collaborative" : false,
+    "description" : "De meest gestreamde artiesten van 2020 in Nederland. Cover: Snelle",
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/playlist/37i9dQZF1DWUSMfONeW98t"
+    },
+    "href" : "https://api.spotify.com/v1/playlists/37i9dQZF1DWUSMfONeW98t",
+    "id" : "37i9dQZF1DWUSMfONeW98t",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://i.scdn.co/image/ab67706f000000035c239dc7d52fe4e49666c36c",
+      "width" : null
+    } ],
+    "name" : "Top Artiesten 2020 NL",
+    "owner" : {
+      "display_name" : "Spotify",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg timestamp="20210303 15:30:29.900" level="INFO">${resp_get_playlist} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210303 15:30:29.662" endtime="20210303 15:30:29.900"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${resp_get_playlist.json()["items"][0]["id"]}</arg>
+</arguments>
+<assign>
+<var>${playlist_ID}</var>
+</assign>
+<msg timestamp="20210303 15:30:29.901" level="INFO">${playlist_ID} = 6CT0MnKMuKICmzPsxuSXHN</msg>
+<status status="PASS" starttime="20210303 15:30:29.900" endtime="20210303 15:30:29.901"></status>
+</kw>
+<msg timestamp="20210303 15:30:29.901" level="INFO">${playlist_ID} = 6CT0MnKMuKICmzPsxuSXHN</msg>
+<status status="PASS" starttime="20210303 15:30:29.661" endtime="20210303 15:30:29.901"></status>
+</kw>
+<kw name="Get ID of song wanted to be added">
+<assign>
+<var>${wanted_song}</var>
+</assign>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Authorization=Bearer ${token} Content-Type: application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20210303 15:30:29.902" level="INFO">&amp;{headers} = { Authorization=Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRi...</msg>
+<status status="PASS" starttime="20210303 15:30:29.901" endtime="20210303 15:30:29.902"></status>
+</kw>
+<kw name="Get On Session" library="RequestsLibrary">
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>spotifySearchSong</arg>
+<arg>/search?q\=track:${song_name}%20artist:${artist}&amp;type\=track&amp;offset\=0&amp;limit\=20</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${resp_wanted_song}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.076" level="INFO">GET Request : url=https://api.spotify.com/v1/search?q=track:Everlong%20artist:Foo%20Fighters&amp;type=track&amp;offset=0&amp;limit=20 
+ path_url=/v1/search?q=track:Everlong%20artist:Foo%20Fighters&amp;type=track&amp;offset=0&amp;limit=20 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRiRuMhtDDWIExfB0TcGK_RuKx7cOR5O9NncBqiwdc7lPtEw8F9QQT6IuVYzJD17cS_dH6io3odkkYmfwJ_HH4_9fu9V-titpF_cmYDaQvAy6- Content-Type: application/json'} 
+ body=None 
+ </msg>
+<msg timestamp="20210303 15:30:30.076" level="INFO">GET Response : url=https://api.spotify.com/v1/search?q=track:Everlong%20artist:Foo%20Fighters&amp;type=track&amp;offset=0&amp;limit=20 
+ status=200, reason=OK 
+ headers={'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=7200', 'x-robots-tag': 'noindex, nofollow', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version, X-Cloud-Trace-Context, client-token, content-access-token', 'access-control-allow-methods': 'GET, POST, OPTIONS, PUT, DELETE, PATCH', 'access-control-allow-credentials': 'true', 'access-control-max-age': '604800', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'date': 'Wed, 03 Mar 2021 14:30:29 GMT', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
+ body={
+  "tracks" : {
+    "href" : "https://api.spotify.com/v1/search?query=track%3AEverlong+artist%3AFoo+Fighters&amp;type=track&amp;offset=0&amp;limit=20",
+    "items" : [ {
+      "album" : {
+        "album_type" : "album",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/7jy3rLJdDQY21OgRLCZ9sD"
+          },
+          "href" : "https://api.spotify.com/v1/artists/7jy3rLJdDQY21OgRLCZ9sD",
+          "id" : "7jy3rLJdDQY21OgRLCZ9sD",
+          "name" : "Foo Fighters",
+          "type" : "artist",
+          "uri" : "spotify:artist:7jy3rLJdDQY21OgRLCZ9sD"
+        } ],
+        "available_markets" : [ "AD", "AE", "AG", "AL", "AM", "AR", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CH", "CL", "CM", "CO", "CR", "CV", "CW", "CY", "CZ", "DE", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FM", "FR", "GA", "GB", "GD", "GE", "GH", "GM", "GN", "GQ", "GR", "GT", "GW", "GY", "HK", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KR", "KW", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MH", "MK", "ML", "MN", "MO", "MR", "MT", "MV", "MW", "MX", "MY", "NA", "NE", "NG", "NI", "NL", "NO", "NP", "NR", "NZ", "OM", "PA", "PE", "PG", "PH", "PK", "PL", "PS", "PT", "PW", "PY", "QA", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SE", "SG", "SI", "SK", "SL", "SM", "SN", "SR", "ST", "SV", "SZ", "TD", "TG", "TH", "TL", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VC", "VN", "VU", "WS", "XK", "ZA", "ZW" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/30ly6F6Xl0TKmyBCU50Khv"
+        },
+        "href" : "https://api.spotify.com/v1/albums/30ly6F6Xl0TKmyBCU50Khv",
+        "id" : "30ly6F6Xl0TKmyBCU50Khv",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/ab67616d0000b2730389027010b78a5e7dce426b",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/ab67616d00001e020389027010b78a5e7dce426b",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/ab67616d000048510389027010b78a5e7dce426b",
+          "width" : 64
+        } ],
+        "name" : "The Colour And The Shape",
+        "release_date" : "1997-05-20",
+        "release_date_precision" : "day",
+        "total_tracks" : 14,
+        "type" : "album",
+        "uri" : "spotify:album:30ly6F6Xl0TKmyBCU50Khv"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/7jy3rLJdDQY21OgRLCZ9sD"
+        },
+        "href" : "https://api.spotify.com/v1/artists/7jy3rLJdDQY21OgRLCZ9sD",
+        "id" : "7jy3rLJdDQY21OgRLCZ9sD",
+        "name" : "Foo Fighters",
+        "type" : "artist",
+        "uri" : "spotify:artist:7jy3rLJdDQY21OgRLCZ9sD"
+      } ],
+      "available_markets" : [ "AD", "AE", "AG", "AL", "AM", "AR", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CH", "CL", "CM", "CO", "CR", "CV", "CW", "CY", "CZ", "DE", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FM", "FR", "GA", "GB", "GD", "GE", "GH", "GM", "GN", "GQ", "GR", "GT", "GW", "GY", "HK", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KR", "KW", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MH", "MK", "ML", "MN", "MO", "MR", "MT", "MV", "MW", "MX", "MY", "NA", "NE", "NG", "NI", "NL", "NO", "NP", "NR", "NZ", "OM", "PA", "PE", "PG", "PH", "PK", "PL", "PS", "PT", "PW", "PY", "QA", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SE", "SG", "SI", "SK", "SL", "SM", "SN", "SR", "ST", "SV", "SZ", "TD", "TG", "TH", "TL", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VC", "VN", "VU", "WS", "XK", "ZA", "ZW" ],
+      "disc_number" : 1,
+      "duration_ms" : 250546,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "USRW29600011"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/5UWwZ5lm5PKu6eKsHAGxOk"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/5UWwZ5lm5PKu6eKsHAGxOk",
+      "id" : "5UWwZ5lm5PKu6eKsHAGxOk",
+      "is_local" : false,
+      "name" : "Everlong",
+      "popularity" : 77,
+      "preview_url" : "https://p.scdn.co/mp3-preview/7258a9fd5a751e9bdb7030b0da623b3b498b6ba0?cid=774b29d4f13844c495f206cafdad9c86",
+      "track_number" : 11,
+      "type" : "track",
+      "uri" : "spotify:track:5UWwZ5lm5PKu6eKsHAGxOk"
+    }, {
+      "album" : {
+        "album_type" : "compilation",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/7jy3rLJdDQY21OgRLCZ9sD"
+          },
+          "href" : "https://api.spotify.com/v1/artists/7jy3rLJdDQY21OgRLCZ9sD",
+          "id" : "7jy3rLJdDQY21OgRLCZ9sD",
+          "name" : "Foo Fighters",
+          "type" : "artist",
+          "uri" : "spotify:artist:7jy3rLJdDQY21OgRLCZ9sD"
+        } ],
+        "available_markets" : [ "AD", "AE", "AG", "AL", "AM", "AR", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CH", "CL", "CM", "CO", "CR", "CV", "CW", "CY", "CZ", "DE", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FM", "FR", "GA", "GB", "GD", "GE", "GH", "GM", "GN", "GQ", "GR", "GT", "GW", "GY", "HK", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KR", "KW", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MH", "MK", "ML", "MN", "MO", "MR", "MT", "MV", "MW", "MX", "MY", "NA", "NE", "NG", "NI", "NL", "NO", "NP", "NR", "NZ", "OM", "PA", "PE", "PG", "PH", "PK", "PL", "PS", "PT", "PW", "PY", "QA", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SE", "SG", "SI", "SK", "SL", "SM", "SN", "SR", "ST", "SV", "SZ", "TD", "TG", "TH", "TL", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VC", "VN", "VU", "WS", "XK", "ZA", "ZW" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/1zCNrbPpz5OLSr6mSpPdKm"
+        },
+        "href" : "https://api.spotify.com/v1/albums/1zCNrbPpz5OLSr6mSpPdKm",
+        "id" : "1zCNrbPpz5OLSr6mSpPdKm",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/ab67616d0000b273136d7250568820409f8fdd60",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/ab67616d00001e02136d7250568820409f8fdd60",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/ab67616d00004851136d7250568820409f8fdd60",
+          "width" : 64
+        } ],
+        "name" : "Greatest Hits",
+        "release_date" : "2009-11-03",
+        "release_date_precision" : "day",
+        "total_tracks" : 16,
+        "type" : "album",
+        "uri" : "spotify:album:1zCNrbPpz5OLSr6mSpPdKm"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/7jy3rLJdDQY21OgRLCZ9sD"
+        },
+        "href" : "https://api.spotify.com/v1/artists/7jy3rLJdDQY21OgRLCZ9sD",
+        "id" : "7jy3rLJdDQY21OgRLCZ9sD",
+        "name" : "Foo Fighters",
+        "type" : "artist",
+        "uri" : "spotify:artist:7jy3rLJdDQY21OgRLCZ9sD"
+      } ],
+      "available_markets" : [ "AD", "AE", "AG", "AL", "AM", "AR", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CH", "CL", "CM", "CO", "CR", "CV", "CW", "CY", "CZ", "DE", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FM", "FR", "GA", "GB", "GD", "GE", "GH", "GM", "GN", "GQ", "GR", "GT", "GW", "GY", "HK", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KR", "KW", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MH", "MK", "ML", "MN", "MO", "MR", "MT", "MV", "MW", "MX", "MY", "NA", "NE", "NG", "NI", "NL", "NO", "NP", "NR", "NZ", "OM", "PA", "PE", "PG", "PH", "PK", "PL", "PS", "PT", "PW", "PY", "QA", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SE", "SG", "SI", "SK", "SL", "SM", "SN", "SR", "ST", "SV", "SZ", "TD", "TG", "TH", "TL", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VC", "VN", "VU", "WS", "XK", "ZA", "ZW" ],
+      "disc_number" : 1,
+      "duration_ms" : 250906,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "USRW30900002"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/3QmesrvdbPjwf7i40nht1D"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/3QmesrvdbPjwf7i40nht1D",
+      "id" : "3QmesrvdbPjwf7i40nht1D",
+      "is_local" : false,
+      "name" : "Everlong - Acoustic Version",
+      "popularity" : 68,
+      "preview_url" : "https://p.scdn.co/mp3-preview/1c0b55249a31c0b33fe4689c7308169a4f99604c?cid=774b29d4f13844c495f206cafdad9c86",
+      "track_number" : 16,
+      "type" : "track",
+      "uri" : "spotify:track:3QmesrvdbPjwf7i40nht1D"
+    }, {
+      "album" : {
+        "album_type" : "compilation",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/7jy3rLJdDQY21OgRLCZ9sD"
+          },
+          "href" : "https://api.spotify.com/v1/artists/7jy3rLJdDQY21OgRLCZ9sD",
+          "id" : "7jy3rLJdDQY21OgRLCZ9sD",
+          "name" : "Foo Fighters",
+          "type" : "artist",
+          "uri" : "spotify:artist:7jy3rLJdDQY21OgRLCZ9sD"
+        } ],
+        "available_markets" : [ "AD", "AE", "AG", "AL", "AM", "AR", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ",... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg timestamp="20210303 15:30:30.077" level="INFO">${resp_wanted_song} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210303 15:30:29.902" endtime="20210303 15:30:30.077"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${resp_wanted_song.json()["tracks"]["items"][0]["id"]}</arg>
+</arguments>
+<assign>
+<var>${wanted_song}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.077" level="INFO">${wanted_song} = 5UWwZ5lm5PKu6eKsHAGxOk</msg>
+<status status="PASS" starttime="20210303 15:30:30.077" endtime="20210303 15:30:30.077"></status>
+</kw>
+<msg timestamp="20210303 15:30:30.078" level="INFO">${wanted_song} = 5UWwZ5lm5PKu6eKsHAGxOk</msg>
+<status status="PASS" starttime="20210303 15:30:29.901" endtime="20210303 15:30:30.078"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifyAddSongToPlaylist</arg>
+<arg>https://api.spotify.com/v1/playlists/${playlist_ID}</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:30.078" level="INFO">Creating Session using : alias=spotifyAddSongToPlaylist, url=https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:30.078" endtime="20210303 15:30:30.078"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Authorization=Bearer ${token} Content-Type: application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.079" level="INFO">&amp;{headers} = { Authorization=Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRi...</msg>
+<status status="PASS" starttime="20210303 15:30:30.078" endtime="20210303 15:30:30.079"></status>
+</kw>
+<kw name="Post On Session" library="RequestsLibrary">
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>spotifyAddSongToPlaylist</arg>
+<arg>/tracks?uris\=spotify%3Atrack%3A${wanted_song}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${resp}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.280" level="INFO">POST Request : url=https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN/tracks?uris=spotify%3Atrack%3A5UWwZ5lm5PKu6eKsHAGxOk 
+ path_url=/v1/playlists/6CT0MnKMuKICmzPsxuSXHN/tracks?uris=spotify%3Atrack%3A5UWwZ5lm5PKu6eKsHAGxOk 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRiRuMhtDDWIExfB0TcGK_RuKx7cOR5O9NncBqiwdc7lPtEw8F9QQT6IuVYzJD17cS_dH6io3odkkYmfwJ_HH4_9fu9V-titpF_cmYDaQvAy6- Content-Type: application/json', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20210303 15:30:30.280" level="INFO">POST Response : url=https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN/tracks?uris=spotify%3Atrack%3A5UWwZ5lm5PKu6eKsHAGxOk 
+ status=201, reason=Created 
+ headers={'content-type': 'application/json; charset=utf-8', 'cache-control': 'private, max-age=0', 'x-robots-tag': 'noindex, nofollow', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version, X-Cloud-Trace-Context, client-token, content-access-token', 'access-control-allow-methods': 'GET, POST, OPTIONS, PUT, DELETE, PATCH', 'access-control-allow-credentials': 'true', 'access-control-max-age': '604800', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'date': 'Wed, 03 Mar 2021 14:30:29 GMT', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
+ body={
+  "snapshot_id" : "MyxkYTY1NzBiNTY0ZDVkZWQzYThkY2Q3YjhhMmZmZjFhOWRhMDJiMTU0"
+} 
+ </msg>
+<msg timestamp="20210303 15:30:30.280" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20210303 15:30:30.079" endtime="20210303 15:30:30.281"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.661" endtime="20210303 15:30:30.281"></status>
+</kw>
+<kw name="Check that the newly added song is in the playlist">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Authorization=Bearer ${token} Content-Type: application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.283" level="INFO">&amp;{headers} = { Authorization=Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRi...</msg>
+<status status="PASS" starttime="20210303 15:30:30.282" endtime="20210303 15:30:30.283"></status>
+</kw>
+<kw name="Get On Session" library="RequestsLibrary">
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>spotifyAddSongToPlaylist</arg>
+<arg>/tracks</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${resp2}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.400" level="INFO">GET Request : url=https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN/tracks 
+ path_url=/v1/playlists/6CT0MnKMuKICmzPsxuSXHN/tracks 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRiRuMhtDDWIExfB0TcGK_RuKx7cOR5O9NncBqiwdc7lPtEw8F9QQT6IuVYzJD17cS_dH6io3odkkYmfwJ_HH4_9fu9V-titpF_cmYDaQvAy6- Content-Type: application/json'} 
+ body=None 
+ </msg>
+<msg timestamp="20210303 15:30:30.400" level="INFO">GET Response : url=https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN/tracks 
+ status=200, reason=OK 
+ headers={'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=0', 'etag': '"MC-ImZiZDg1MTQzNzJjM2EwMWI5OTkyYjNmNWQzOWM3YWViIg=="', 'x-robots-tag': 'noindex, nofollow', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version, X-Cloud-Trace-Context, client-token, content-access-token', 'access-control-allow-methods': 'GET, POST, OPTIONS, PUT, DELETE, PATCH', 'access-control-allow-credentials': 'true', 'access-control-max-age': '604800', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'date': 'Wed, 03 Mar 2021 14:30:30 GMT', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
+ body={
+  "href" : "https://api.spotify.com/v1/playlists/6CT0MnKMuKICmzPsxuSXHN/tracks?offset=0&amp;limit=100",
+  "items" : [ {
+    "added_at" : "2021-03-03T14:30:30Z",
+    "added_by" : {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/user/makeevolution"
+      },
+      "href" : "https://api.spotify.com/v1/users/makeevolution",
+      "id" : "makeevolution",
+      "type" : "user",
+      "uri" : "spotify:user:makeevolution"
+    },
+    "is_local" : false,
+    "primary_color" : null,
+    "track" : {
+      "album" : {
+        "album_type" : "album",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/7jy3rLJdDQY21OgRLCZ9sD"
+          },
+          "href" : "https://api.spotify.com/v1/artists/7jy3rLJdDQY21OgRLCZ9sD",
+          "id" : "7jy3rLJdDQY21OgRLCZ9sD",
+          "name" : "Foo Fighters",
+          "type" : "artist",
+          "uri" : "spotify:artist:7jy3rLJdDQY21OgRLCZ9sD"
+        } ],
+        "available_markets" : [ "AD", "AE", "AG", "AL", "AM", "AR", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CH", "CL", "CM", "CO", "CR", "CV", "CW", "CY", "CZ", "DE", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FM", "FR", "GA", "GB", "GD", "GE", "GH", "GM", "GN", "GQ", "GR", "GT", "GW", "GY", "HK", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KR", "KW", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MH", "MK", "ML", "MN", "MO", "MR", "MT", "MV", "MW", "MX", "MY", "NA", "NE", "NG", "NI", "NL", "NO", "NP", "NR", "NZ", "OM", "PA", "PE", "PG", "PH", "PK", "PL", "PS", "PT", "PW", "PY", "QA", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SE", "SG", "SI", "SK", "SL", "SM", "SN", "SR", "ST", "SV", "SZ", "TD", "TG", "TH", "TL", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VC", "VN", "VU", "WS", "XK", "ZA", "ZW" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/30ly6F6Xl0TKmyBCU50Khv"
+        },
+        "href" : "https://api.spotify.com/v1/albums/30ly6F6Xl0TKmyBCU50Khv",
+        "id" : "30ly6F6Xl0TKmyBCU50Khv",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/ab67616d0000b2730389027010b78a5e7dce426b",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/ab67616d00001e020389027010b78a5e7dce426b",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/ab67616d000048510389027010b78a5e7dce426b",
+          "width" : 64
+        } ],
+        "name" : "The Colour And The Shape",
+        "release_date" : "1997-05-20",
+        "release_date_precision" : "day",
+        "total_tracks" : 14,
+        "type" : "album",
+        "uri" : "spotify:album:30ly6F6Xl0TKmyBCU50Khv"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/7jy3rLJdDQY21OgRLCZ9sD"
+        },
+        "href" : "https://api.spotify.com/v1/artists/7jy3rLJdDQY21OgRLCZ9sD",
+        "id" : "7jy3rLJdDQY21OgRLCZ9sD",
+        "name" : "Foo Fighters",
+        "type" : "artist",
+        "uri" : "spotify:artist:7jy3rLJdDQY21OgRLCZ9sD"
+      } ],
+      "available_markets" : [ "AD", "AE", "AG", "AL", "AM", "AR", "AT", "AU", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BN", "BO", "BR", "BS", "BT", "BW", "BY", "BZ", "CA", "CH", "CL", "CM", "CO", "CR", "CV", "CW", "CY", "CZ", "DE", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FM", "FR", "GA", "GB", "GD", "GE", "GH", "GM", "GN", "GQ", "GR", "GT", "GW", "GY", "HK", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KR", "KW", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MH", "MK", "ML", "MN", "MO", "MR", "MT", "MV", "MW", "MX", "MY", "NA", "NE", "NG", "NI", "NL", "NO", "NP", "NR", "NZ", "OM", "PA", "PE", "PG", "PH", "PK", "PL", "PS", "PT", "PW", "PY", "QA", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SE", "SG", "SI", "SK", "SL", "SM", "SN", "SR", "ST", "SV", "SZ", "TD", "TG", "TH", "TL", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VC", "VN", "VU", "WS", "XK", "ZA", "ZW" ],
+      "disc_number" : 1,
+      "duration_ms" : 250546,
+      "episode" : false,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "USRW29600011"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/5UWwZ5lm5PKu6eKsHAGxOk"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/5UWwZ5lm5PKu6eKsHAGxOk",
+      "id" : "5UWwZ5lm5PKu6eKsHAGxOk",
+      "is_local" : false,
+      "name" : "Everlong",
+      "popularity" : 77,
+      "preview_url" : "https://p.scdn.co/mp3-preview/7258a9fd5a751e9bdb7030b0da623b3b498b6ba0?cid=774b29d4f13844c495f206cafdad9c86",
+      "track" : true,
+      "track_number" : 11,
+      "type" : "track",
+      "uri" : "spotify:track:5UWwZ5lm5PKu6eKsHAGxOk"
+    },
+    "video_thumbnail" : {
+      "url" : null
+    }
+  } ],
+  "limit" : 100,
+  "next" : null,
+  "offset" : 0,
+  "previous" : null,
+  "total" : 1
+} 
+ </msg>
+<msg timestamp="20210303 15:30:30.401" level="INFO">${resp2} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210303 15:30:30.283" endtime="20210303 15:30:30.401"></status>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<doc>Returns a list containing given items.</doc>
+<assign>
+<var>@{songs_in_playlist}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.401" level="INFO">@{songs_in_playlist} = [ ]</msg>
+<status status="PASS" starttime="20210303 15:30:30.401" endtime="20210303 15:30:30.401"></status>
+</kw>
+<kw name="${i} IN [ @{resp2.json()[&quot;items&quot;]} ]" type="for">
+<kw name="${i} = {'added_at': '2021-03-03T14:30:30Z', 'added_by': {'external_urls': {'spotify': 'https://open.spotify.com/user/makeevolution'}, 'href': 'https://api.spotify.com/v1/users/makeevolution', 'id': 'makeevol..." type="foritem">
+<kw name="Append To List" library="Collections">
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<arguments>
+<arg>${songs_in_playlist}</arg>
+<arg>${i["track"]["name"]}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:30.402" endtime="20210303 15:30:30.402"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:30.402" endtime="20210303 15:30:30.402"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:30.401" endtime="20210303 15:30:30.402"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${songs_in_playlist}</arg>
+<arg>${song_name}</arg>
+</arguments>
+<status status="PASS" starttime="20210303 15:30:30.402" endtime="20210303 15:30:30.402"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:30.281" endtime="20210303 15:30:30.402"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:29.202" endtime="20210303 15:30:30.403" critical="yes"></status>
 </test>
-<status status="PASS" starttime="20210302 17:42:42.513" endtime="20210302 17:42:45.660"></status>
+<test id="s1-t2" name="Test case 2: A user supplies valid User ID but supplies non-corresponding User Token">
+<kw name="Create All Endpoints and User supplies their User ID">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifyAddNewPlaylist</arg>
+<arg>https://api.spotify.com/v1/users/${user_ID}</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:30.405" level="INFO">Creating Session using : alias=spotifyAddNewPlaylist, url=https://api.spotify.com/v1/users/makeevolution, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:30.405" endtime="20210303 15:30:30.406"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifyGetPlaylistList</arg>
+<arg>https://api.spotify.com/v1/users/${user_ID}/playlists</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:30.406" level="INFO">Creating Session using : alias=spotifyGetPlaylistList, url=https://api.spotify.com/v1/users/makeevolution/playlists, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:30.406" endtime="20210303 15:30:30.406"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifySearchSong</arg>
+<arg>https://api.spotify.com/v1</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:30.406" level="INFO">Creating Session using : alias=spotifySearchSong, url=https://api.spotify.com/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:30.406" endtime="20210303 15:30:30.406"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:30.404" endtime="20210303 15:30:30.407"></status>
+</kw>
+<kw name="User supplies invalid User Token and attempts to add a new playlist">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>name=${playlist_name}</arg>
+<arg>description=${playlist_name}</arg>
+</arguments>
+<assign>
+<var>&amp;{data}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.408" level="INFO">&amp;{data} = { name=RobotFrameworkPlaylist | description=RobotFrameworkPlaylist }</msg>
+<status status="PASS" starttime="20210303 15:30:30.407" endtime="20210303 15:30:30.408"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=Bearer ThisSentenceRepresentsInvalidToken</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.408" level="INFO">&amp;{headers} = { Content-Type=application/json | Authorization=Bearer ThisSentenceRepresentsInvalidToken }</msg>
+<status status="PASS" starttime="20210303 15:30:30.408" endtime="20210303 15:30:30.408"></status>
+</kw>
+<kw name="Post On Session" library="RequestsLibrary">
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>spotifyAddNewPlaylist</arg>
+<arg>/playlists</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${resp}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.495" level="INFO">POST Request : url=https://api.spotify.com/v1/users/makeevolution/playlists 
+ path_url=/v1/users/makeevolution/playlists 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer ThisSentenceRepresentsInvalidToken', 'Content-Length': '75'} 
+ body=b'{"name": "RobotFrameworkPlaylist", "description": "RobotFrameworkPlaylist"}' 
+ </msg>
+<msg timestamp="20210303 15:30:30.495" level="INFO">POST Response : url=https://api.spotify.com/v1/users/makeevolution/playlists 
+ status=401, reason=Unauthorized 
+ headers={'www-authenticate': 'Bearer realm="spotify", error="invalid_token", error_description="Invalid access token"', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version, X-Cloud-Trace-Context, client-token, content-access-token', 'access-control-allow-methods': 'GET, POST, OPTIONS, PUT, DELETE, PATCH', 'access-control-allow-credentials': 'true', 'access-control-max-age': '604800', 'content-type': 'application/json', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'date': 'Wed, 03 Mar 2021 14:30:30 GMT', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
+ body={
+  "error": {
+    "status": 401,
+    "message": "Invalid access token"
+  }
+} 
+ </msg>
+<msg timestamp="20210303 15:30:30.496" level="FAIL">HTTPError: 401 Client Error: Unauthorized for url: https://api.spotify.com/v1/users/makeevolution/playlists</msg>
+<status status="FAIL" starttime="20210303 15:30:30.408" endtime="20210303 15:30:30.496"></status>
+</kw>
+<status status="FAIL" starttime="20210303 15:30:30.407" endtime="20210303 15:30:30.496"></status>
+</kw>
+<status status="FAIL" starttime="20210303 15:30:30.404" endtime="20210303 15:30:30.497" critical="yes">HTTPError: 401 Client Error: Unauthorized for url: https://api.spotify.com/v1/users/makeevolution/playlists</status>
+</test>
+<test id="s1-t3" name="Test case 3: A user supplies invalid User ID but supplies their valid User Token">
+<kw name="Create All Endpoints and User supplies invalid User ID">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifyAddNewPlaylist</arg>
+<arg>https://api.spotify.com/v1/users/${invalid_ID}</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:30.500" level="INFO">Creating Session using : alias=spotifyAddNewPlaylist, url=https://api.spotify.com/v1/users/maekevolution, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:30.500" endtime="20210303 15:30:30.500"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifyGetPlaylistList</arg>
+<arg>https://api.spotify.com/v1/users/${invalid_ID}/playlists</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:30.501" level="INFO">Creating Session using : alias=spotifyGetPlaylistList, url=https://api.spotify.com/v1/users/maekevolution/playlists, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:30.501" endtime="20210303 15:30:30.501"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifySearchSong</arg>
+<arg>https://api.spotify.com/v1</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:30.501" level="INFO">Creating Session using : alias=spotifySearchSong, url=https://api.spotify.com/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:30.501" endtime="20210303 15:30:30.501"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:30.500" endtime="20210303 15:30:30.502"></status>
+</kw>
+<kw name="User supplies corresponding User Token and add new playlist">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>name=${playlist_name}</arg>
+<arg>description=${playlist_name}</arg>
+</arguments>
+<assign>
+<var>&amp;{data}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.503" level="INFO">&amp;{data} = { name=RobotFrameworkPlaylist | description=RobotFrameworkPlaylist }</msg>
+<status status="PASS" starttime="20210303 15:30:30.502" endtime="20210303 15:30:30.503"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=Bearer ${token}</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.503" level="INFO">&amp;{headers} = { Content-Type=application/json | Authorization=Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lU...</msg>
+<status status="PASS" starttime="20210303 15:30:30.503" endtime="20210303 15:30:30.503"></status>
+</kw>
+<kw name="Post On Session" library="RequestsLibrary">
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>spotifyAddNewPlaylist</arg>
+<arg>/playlists</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${resp}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.625" level="INFO">POST Request : url=https://api.spotify.com/v1/users/maekevolution/playlists 
+ path_url=/v1/users/maekevolution/playlists 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRiRuMhtDDWIExfB0TcGK_RuKx7cOR5O9NncBqiwdc7lPtEw8F9QQT6IuVYzJD17cS_dH6io3odkkYmfwJ_HH4_9fu9V-titpF_cmYDaQvAy6-', 'Content-Length': '75'} 
+ body=b'{"name": "RobotFrameworkPlaylist", "description": "RobotFrameworkPlaylist"}' 
+ </msg>
+<msg timestamp="20210303 15:30:30.626" level="INFO">POST Response : url=https://api.spotify.com/v1/users/maekevolution/playlists 
+ status=403, reason=Forbidden 
+ headers={'content-type': 'application/json; charset=utf-8', 'cache-control': 'private, max-age=0', 'x-robots-tag': 'noindex, nofollow', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version, X-Cloud-Trace-Context, client-token, content-access-token', 'access-control-allow-methods': 'GET, POST, OPTIONS, PUT, DELETE, PATCH', 'access-control-allow-credentials': 'true', 'access-control-max-age': '604800', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'date': 'Wed, 03 Mar 2021 14:30:30 GMT', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
+ body={
+  "error" : {
+    "status" : 403,
+    "message" : "You cannot create a playlist for another user."
+  }
+} 
+ </msg>
+<msg timestamp="20210303 15:30:30.627" level="FAIL">HTTPError: 403 Client Error: Forbidden for url: https://api.spotify.com/v1/users/maekevolution/playlists</msg>
+<status status="FAIL" starttime="20210303 15:30:30.503" endtime="20210303 15:30:30.627"></status>
+</kw>
+<status status="FAIL" starttime="20210303 15:30:30.502" endtime="20210303 15:30:30.627"></status>
+</kw>
+<status status="FAIL" starttime="20210303 15:30:30.499" endtime="20210303 15:30:30.628" critical="yes">HTTPError: 403 Client Error: Forbidden for url: https://api.spotify.com/v1/users/maekevolution/playlists</status>
+</test>
+<test id="s1-t4" name="Test case 4: A user supplies invalid User ID and supplies invalid User Token">
+<kw name="Create All Endpoints and User supplies invalid User ID">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifyAddNewPlaylist</arg>
+<arg>https://api.spotify.com/v1/users/${invalid_ID}</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:30.633" level="INFO">Creating Session using : alias=spotifyAddNewPlaylist, url=https://api.spotify.com/v1/users/maekevolution, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:30.632" endtime="20210303 15:30:30.633"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifyGetPlaylistList</arg>
+<arg>https://api.spotify.com/v1/users/${invalid_ID}/playlists</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:30.634" level="INFO">Creating Session using : alias=spotifyGetPlaylistList, url=https://api.spotify.com/v1/users/maekevolution/playlists, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:30.633" endtime="20210303 15:30:30.634"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>spotifySearchSong</arg>
+<arg>https://api.spotify.com/v1</arg>
+<arg>disable_warnings=1</arg>
+</arguments>
+<msg timestamp="20210303 15:30:30.634" level="INFO">Creating Session using : alias=spotifySearchSong, url=https://api.spotify.com/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210303 15:30:30.634" endtime="20210303 15:30:30.635"></status>
+</kw>
+<status status="PASS" starttime="20210303 15:30:30.631" endtime="20210303 15:30:30.635"></status>
+</kw>
+<kw name="User supplies invalid User Token and attempts to add a new playlist">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>name=${playlist_name}</arg>
+<arg>description=${playlist_name}</arg>
+</arguments>
+<assign>
+<var>&amp;{data}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.637" level="INFO">&amp;{data} = { name=RobotFrameworkPlaylist | description=RobotFrameworkPlaylist }</msg>
+<status status="PASS" starttime="20210303 15:30:30.636" endtime="20210303 15:30:30.637"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=Bearer ThisSentenceRepresentsInvalidToken</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.637" level="INFO">&amp;{headers} = { Content-Type=application/json | Authorization=Bearer ThisSentenceRepresentsInvalidToken }</msg>
+<status status="PASS" starttime="20210303 15:30:30.637" endtime="20210303 15:30:30.637"></status>
+</kw>
+<kw name="Post On Session" library="RequestsLibrary">
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>spotifyAddNewPlaylist</arg>
+<arg>/playlists</arg>
+<arg>json=${data}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${resp}</var>
+</assign>
+<msg timestamp="20210303 15:30:30.710" level="INFO">POST Request : url=https://api.spotify.com/v1/users/maekevolution/playlists 
+ path_url=/v1/users/maekevolution/playlists 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer ThisSentenceRepresentsInvalidToken', 'Content-Length': '75'} 
+ body=b'{"name": "RobotFrameworkPlaylist", "description": "RobotFrameworkPlaylist"}' 
+ </msg>
+<msg timestamp="20210303 15:30:30.710" level="INFO">POST Response : url=https://api.spotify.com/v1/users/maekevolution/playlists 
+ status=401, reason=Unauthorized 
+ headers={'www-authenticate': 'Bearer realm="spotify", error="invalid_token", error_description="Invalid access token"', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version, X-Cloud-Trace-Context, client-token, content-access-token', 'access-control-allow-methods': 'GET, POST, OPTIONS, PUT, DELETE, PATCH', 'access-control-allow-credentials': 'true', 'access-control-max-age': '604800', 'content-type': 'application/json', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'date': 'Wed, 03 Mar 2021 14:30:30 GMT', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
+ body={
+  "error": {
+    "status": 401,
+    "message": "Invalid access token"
+  }
+} 
+ </msg>
+<msg timestamp="20210303 15:30:30.711" level="FAIL">HTTPError: 401 Client Error: Unauthorized for url: https://api.spotify.com/v1/users/maekevolution/playlists</msg>
+<status status="FAIL" starttime="20210303 15:30:30.637" endtime="20210303 15:30:30.711"></status>
+</kw>
+<status status="FAIL" starttime="20210303 15:30:30.636" endtime="20210303 15:30:30.711"></status>
+</kw>
+<status status="FAIL" starttime="20210303 15:30:30.630" endtime="20210303 15:30:30.711" critical="yes">HTTPError: 401 Client Error: Unauthorized for url: https://api.spotify.com/v1/users/maekevolution/playlists</status>
+</test>
+<status status="FAIL" starttime="20210303 15:30:28.878" endtime="20210303 15:30:30.713"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0">Critical Tests</stat>
-<stat pass="1" fail="0">All Tests</stat>
+<stat pass="1" fail="3">Critical Tests</stat>
+<stat pass="1" fail="3">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="1" fail="0" id="s1" name="Test Selenium">Test Selenium</stat>
+<stat pass="1" fail="3" id="s1" name="RF spotify">RF spotify</stat>
 </suite>
 </statistics>
 <errors>
-<msg timestamp="20210302 17:42:42.845" level="ERROR">Error in file 'C:\Users\aldo-\OneDrive\job\RobotFramework\test_selenium.robot' on line 3: Importing test library 'Selenium.webdriver.common.by' failed: ModuleNotFoundError: No module named 'Selenium'
-Traceback (most recent call last):
-  None
-PYTHONPATH:
-  C:\Users\aldo-\AppData\Local\Programs\Python\Python39-32\Scripts\robot.exe
-  c:\users\aldo-\appdata\local\programs\python\python39-32\python39.zip
-  c:\users\aldo-\appdata\local\programs\python\python39-32\DLLs
-  c:\users\aldo-\appdata\local\programs\python\python39-32\lib
-  c:\users\aldo-\appdata\local\programs\python\python39-32
-  C:\Users\aldo-\AppData\Roaming\Python\Python39\site-packages
-  c:\users\aldo-\appdata\local\programs\python\python39-32\lib\site-packages
-  c:\users\aldo-\appdata\local\programs\python\python39-32\lib\site-packages\win32
-  c:\users\aldo-\appdata\local\programs\python\python39-32\lib\site-packages\win32\lib
-  c:\users\aldo-\appdata\local\programs\python\python39-32\lib\site-packages\Pythonwin</msg>
 </errors>
 </robot>

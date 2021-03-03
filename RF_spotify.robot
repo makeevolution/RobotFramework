@@ -7,15 +7,18 @@ Library     SeleniumLibrary
 Library     OperatingSystem
 
 *** Variables ***
-#User data
+#User ID
 ${user_ID}  makeevolution
+#Invalid ID used for test case 2-4 below that should give a fail result
 ${invalid_ID}   maekevolution
-${token}    BQAe3bR8M6pB0SgUx1pvMq4AWO1toFbFsfGw6tW4fZMhW_qkJagsUfal30BDk_NborR-3JviLJJH031dHlsap4NSTzHIYcYCTXsbz3wcfWuJY1VDXmsBTetVPSkm5flCEu1b5obdbPYqm9nZF-Rq4ZwKgD42V-m2t4taTYlDgn_Se-2r9NVn7XFOozuiY5wy67HVjxAR8MlXotmOExc15OrKanxi7PNeeNJEwxIAmvwZWmZ4powFhTtih7RgoxzW6h4x1nXPKVNHBFxvBSL4GEtXI29u
-#Song to be added
-${song_name}=   Smells Like Teen Spirit
-${artist}=  Nirvana
+#Supply unique token, request this from Spotify API
+${token}    BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRiRuMhtDDWIExfB0TcGK_RuKx7cOR5O9NncBqiwdc7lPtEw8F9QQT6IuVYzJD17cS_dH6io3odkkYmfwJ_HH4_9fu9V-titpF_cmYDaQvAy6-
 #Name of new playlist
 ${playlist_name}=   RobotFrameworkPlaylist
+#Song to be added
+${song_name}=   Everlong
+${artist}=  Foo Fighters
+
 
 *** Keywords ***
 Create All Endpoints and User supplies their User ID
@@ -70,7 +73,8 @@ Add song to the playlist
 
 Check that the newly added song is in the playlist
     &{headers}=       Create dictionary   Authorization=Bearer ${token} Content-Type: application/json
-    ${resp2}    get on session  spotifyAddSongToPlaylist    /tracks     headers=${headers}
+    Create Session      spotifyGetSongsInPlaylist     https://api.spotify.com/v1/playlists/${playlist_ID}    disable_warnings=1
+    ${resp2}    get on session  spotifyGetSongsInPlaylist    /tracks     headers=${headers}
     @{songs_in_playlist}=   Create List
     FOR     ${i}    IN   @{resp2.json()["items"]}
         append to list  ${songs_in_playlist}    ${i["track"]["name"]}
