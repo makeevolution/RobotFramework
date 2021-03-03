@@ -1,320 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.2.2 (Python 3.9.0 on win32)" generated="20210220 17:09:18.103" rpa="false">
-<suite id="s1" name="RF with XML" source="C:\Users\aldo-\OneDrive\job\RobotFramework\RF_with_XML.robot">
-<test id="s1-t1" name="Verify /authorize endpoint of Spotify works given a valid client ID">
-<kw name="Create Session" library="RequestsLibrary">
-<doc>Create Session: create a HTTP session to a server</doc>
+<robot generator="Robot 3.2.2 (Python 3.9.0 on win32)" generated="20210302 17:42:42.509" rpa="false">
+<suite id="s1" name="Test Selenium" source="C:\Users\aldo-\OneDrive\job\RobotFramework\test_selenium.robot">
+<test id="s1-t1" name="TC1:dgdg">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
 <arguments>
-<arg>spotify</arg>
-<arg>https://accounts.spotify.com/authorize</arg>
-<arg>disable_warnings=1</arg>
+<arg>https://playtictactoe.org/</arg>
+<arg>chrome</arg>
 </arguments>
-<msg timestamp="20210220 17:09:18.242" level="INFO">Creating Session using : alias=spotify, url=https://accounts.spotify.com/authorize, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20210220 17:09:18.241" endtime="20210220 17:09:18.242"></status>
+<msg timestamp="20210302 17:42:42.848" level="INFO">Opening browser 'chrome' to base url 'https://playtictactoe.org/'.</msg>
+<status status="PASS" starttime="20210302 17:42:42.848" endtime="20210302 17:42:45.620"></status>
 </kw>
-<kw name="Create Dictionary" library="BuiltIn">
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<kw name="Get Element Attribute" library="SeleniumLibrary">
+<doc>Returns the value of ``attribute`` from the element ``locator``.</doc>
 <arguments>
-<arg>client_id=${Client} response_type=code show_dialog=false</arg>
+<arg>xpath://html/body/div[4]/p[1]/span[4]</arg>
+<arg>innerHTML</arg>
 </arguments>
 <assign>
-<var>&amp;{params}</var>
+<var>${var}</var>
 </assign>
-<msg timestamp="20210220 17:09:18.244" level="INFO">&amp;{params} = { client_id=37c20107468d46abb7434eca03648d2f response_type=code show_dialog=false }</msg>
-<status status="PASS" starttime="20210220 17:09:18.243" endtime="20210220 17:09:18.244"></status>
-</kw>
-<kw name="Get On Session" library="RequestsLibrary">
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<arguments>
-<arg>spotify</arg>
-<arg>/</arg>
-<arg>params=${params}</arg>
-</arguments>
-<assign>
-<var>${resp}</var>
-</assign>
-<msg timestamp="20210220 17:09:18.373" level="INFO">GET Request : url=https://accounts.spotify.com/authorize/?client_id=37c20107468d46abb7434eca03648d2f+response_type%3Dcode+show_dialog%3Dfalse (redirected) 
- path_url=/authorize/?client_id=37c20107468d46abb7434eca03648d2f+response_type%3Dcode+show_dialog%3Dfalse 
- headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
- body=None 
- </msg>
-<msg timestamp="20210220 17:09:18.374" level="INFO">GET Response : url=https://accounts.spotify.com/login?continue=https%3A%2F%2Faccounts.spotify.com%2Fauthorize%2F%3Fclient_id%3D37c20107468d46abb7434eca03648d2f%2Bresponse_type%253Dcode%2Bshow_dialog%253Dfalse 
- status=200, reason=OK 
- headers={'date': 'Sat, 20 Feb 2021 16:09:17 GMT', 'content-type': 'text/html;charset=utf-8', 'vary': 'Accept-Encoding', 'x-ua-compatible': 'IE=edge', 'cache-control': 'no-cache, no-store, must-revalidate', 'pragma': 'no-cache', 'set-cookie': '__Host-device_id=AQAFvNaptVRmp1-rtnt-DNpWefLrSTkk81h5p_-RDMQJWl_YattMA7VjC_MHrvfeuw-a679SvNtgDp3rt1JnQ7BGu9W8m3lfxOQ;Version=1;Path=/;Max-Age=2147483647;Secure;HttpOnly;SameSite=Lax, __Secure-TPASESSION=AQDod8gczAc01SSvV9/xTKBtyHy0mVVFIAtlmj9kOWvd6g+Qt48BzOBCuNx8uwYtWaWZjXvEnJOigoOmv0szVDOEclUZ/4gvyCw=;Version=1;Domain=accounts.spotify.com;Path=/;Secure;HttpOnly;SameSite=None, csrf_token=AQA-zTPNtP-enAHjHwIlIvb4EUzUNy1DP2WrIfP3lQHMrtBUdmODauAKaLST3iiURhLtwrzLKoXxqQ;Version=1;Domain=accounts.spotify.com;Path=/;Secure;SameSite=Lax', 'x-frame-options': 'deny', 'content-security-policy': "default-src 'self'; script-src 'self' https://www.google-analytics.com https://ssl.google-analytics.com https://www.google.com https://www.gstatic.com/recaptcha/ https://www.google.com/recaptcha/ https://cdn.cookielaw.org/scripttemplates/ https://*.onetrust.com https://accounts.scdn.co; img-src 'self' https://i.imgur.com https://d2mv8tnci56s9d.cloudfront.net https://profile-images.scdn.co https://*.scdn.co https://graph.facebook.com https://fbcdn-profile-a.akamaihd.net https://*.fbcdn.net https://platform-lookaside.fbsbx.com https://www.google.com https://www.google-analytics.com https://stats.g.doubleclick.net data: https://accounts.scdn.co; font-src 'self' data: https://sp-bootstrap.global.ssl.fastly.net https://fonts.gstatic.com https://accounts.scdn.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/css2 https://accounts.scdn.co; frame-src 'self' https://www.spotify.com https://www.google.com https://app.adjust.com https://itunes.apple.com itms-apps: https://www.google.com/recaptcha/; connect-src 'self' https://www.google-analytics.com https://cdn.cookielaw.org https://*.onetrust.com https://pixel.spotify.com;", 'x-content-security-policy': "default-src 'self'; script-src 'self' https://www.google-analytics.com https://ssl.google-analytics.com https://www.google.com https://www.gstatic.com/recaptcha/ https://www.google.com/recaptcha/ https://cdn.cookielaw.org/scripttemplates/ https://*.onetrust.com https://accounts.scdn.co; img-src 'self' https://i.imgur.com https://d2mv8tnci56s9d.cloudfront.net https://profile-images.scdn.co https://*.scdn.co https://graph.facebook.com https://fbcdn-profile-a.akamaihd.net https://*.fbcdn.net https://platform-lookaside.fbsbx.com https://www.google.com https://www.google-analytics.com https://stats.g.doubleclick.net data: https://accounts.scdn.co; font-src 'self' data: https://sp-bootstrap.global.ssl.fastly.net https://fonts.gstatic.com https://accounts.scdn.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/css2 https://accounts.scdn.co; frame-src 'self' https://www.spotify.com https://www.google.com https://app.adjust.com https://itunes.apple.com itms-apps: https://www.google.com/recaptcha/; connect-src 'self' https://www.google-analytics.com https://cdn.cookielaw.org https://*.onetrust.com https://pixel.spotify.com;", 'sp-trace-id': 'e5f0d717f4ed79c0', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
- body=
-&lt;!DOCTYPE html&gt;
-&lt;html id="app" lang="nl" dir="ltr" ng-csp ng-strict-di&gt;
-&lt;head&gt;
-  &lt;meta charset="utf-8"&gt;
-  &lt;title ng-bind="(&amp;#39;loginTitle&amp;#39; | localize) + &amp;#39; - Spotify&amp;#39;"&gt;Spotify&lt;/title&gt;
-  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;
-  &lt;base href="/"&gt;
-  &lt;link rel="icon" href="https://accounts.scdn.co/sso/images/favicon.ace4d8543bbb017893402a1e9d1ac1fa.ico"&gt;
-  &lt;link href="https://accounts.scdn.co/sso/css/index.3785b597670232baa585.css" media="screen" rel="stylesheet"&gt;
-
-  &lt;script defer src="https://accounts.scdn.co/sso/js/index.3785b597670232baa585.js" sp-bootstrap&gt;&lt;/script&gt;
-  &lt;meta ng-non-bindable sp-bootstrap-data='{"phoneFeatureEnabled":false,"previewEnabled":false,"user":false,"tpaState":"AQB5y6CIeO8il4XygBL0LLDvxg2HPEf0SLZipkDACdQXpsLAbjqLtQ54zsuwdRpzYhix+OpAmZaRbCcpTIjLJRytXGh8fnj6R2H+kErhDLJUfMTnEXcp/DDgi/pXhH0I7Ijj1PA/tCX/JXP0l+IfssdJRL3YcOuOQgzEneplWlMaxmEcEigbQbRYC3XBvyP4H50hYYbU9mxhwEbPkeEgXEoVzPb8Rk5y02QhvA3iayLHIf6/QUi3n9tHULIArp+/mLMQpUWCkZfnRGzEXewa+SCzMi/49mR+4CR7fVNedP6N5Qb7BFo0ZWujwpmI8ga+bldzKsPy01C0mJW7ukh+igiGp99DW6otxqk=","BON":["0","0",250381832]}'&gt;
-&lt;/head&gt;
-&lt;body ng-controller="LoginController"&gt;
-  &lt;div ng-include="template"&gt;&lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
- 
- </msg>
-<msg timestamp="20210220 17:09:18.374" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20210220 17:09:18.244" endtime="20210220 17:09:18.374"></status>
-</kw>
-<kw name="Should Be Equal As Strings" library="BuiltIn">
-<doc>Fails if objects are unequal after converting them to strings.</doc>
-<arguments>
-<arg>${resp.status_code}</arg>
-<arg>200</arg>
-</arguments>
-<msg timestamp="20210220 17:09:18.375" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;type 'unicode'&gt;</msg>
-<status status="PASS" starttime="20210220 17:09:18.374" endtime="20210220 17:09:18.375"></status>
-</kw>
-<tags>
-<tag>get</tag>
-</tags>
-<status status="PASS" starttime="20210220 17:09:18.241" endtime="20210220 17:09:18.376" critical="yes"></status>
-</test>
-<test id="s1-t2" name="Verify /api/token endpoint of Spotify works given a valid client ID">
-<kw name="Create Session" library="RequestsLibrary">
-<doc>Create Session: create a HTTP session to a server</doc>
-<arguments>
-<arg>spotify</arg>
-<arg>https://accounts.spotify.com/api</arg>
-<arg>disable_warnings=1</arg>
-</arguments>
-<msg timestamp="20210220 17:09:18.378" level="INFO">Creating Session using : alias=spotify, url=https://accounts.spotify.com/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20210220 17:09:18.377" endtime="20210220 17:09:18.378"></status>
-</kw>
-<kw name="Create Session" library="RequestsLibrary">
-<doc>Create Session: create a HTTP session to a server</doc>
-<arguments>
-<arg>spotifyGETDATA</arg>
-<arg>https://api.spotify.com/v1</arg>
-<arg>disable_warnings=1</arg>
-</arguments>
-<msg timestamp="20210220 17:09:18.378" level="INFO">Creating Session using : alias=spotifyGETDATA, url=https://api.spotify.com/v1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20210220 17:09:18.378" endtime="20210220 17:09:18.379"></status>
-</kw>
-<kw name="Create Dictionary" library="BuiltIn">
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<arguments>
-<arg>client_secret=${Secret}</arg>
-<arg>client_id=${Client}</arg>
-<arg>grant_type=client_credentials</arg>
-<arg>response_type=code</arg>
-</arguments>
-<assign>
-<var>&amp;{data}</var>
-</assign>
-<msg timestamp="20210220 17:09:18.379" level="INFO">&amp;{data} = { client_secret=05713a72c1be4e26a8e8136b4c7f01d4 | client_id=37c20107468d46abb7434eca03648d2f | grant_type=client_credentials | response_type=code }</msg>
-<status status="PASS" starttime="20210220 17:09:18.379" endtime="20210220 17:09:18.380"></status>
-</kw>
-<kw name="Post On Session" library="RequestsLibrary">
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<arguments>
-<arg>spotify</arg>
-<arg>/token</arg>
-<arg>data=${data}</arg>
-</arguments>
-<assign>
-<var>${resp}</var>
-</assign>
-<msg timestamp="20210220 17:09:18.447" level="INFO">POST Request : url=https://accounts.spotify.com/api/token 
- path_url=/api/token 
- headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '138', 'Content-Type': 'application/x-www-form-urlencoded'} 
- body=client_secret=05713a72c1be4e26a8e8136b4c7f01d4&amp;client_id=37c20107468d46abb7434eca03648d2f&amp;grant_type=client_credentials&amp;response_type=code 
- </msg>
-<msg timestamp="20210220 17:09:18.447" level="INFO">POST Response : url=https://accounts.spotify.com/api/token 
- status=200, reason=OK 
- headers={'date': 'Sat, 20 Feb 2021 16:09:17 GMT', 'content-type': 'application/json', 'set-cookie': '__Host-device_id=AQC3zuEP7BXhhnAkz9Ejbku5U-EMUQ98UAQZS7AgdSk5eT521TWNsDfyXl_XVMrQxzzaPxzT9b34N6jg8sgOFjigmEdr846nQwc;Version=1;Path=/;Max-Age=2147483647;Secure;HttpOnly;SameSite=Lax', 'sp-trace-id': 'bda1ee9f8f7ce734', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'content-encoding': 'gzip', 'vary': 'Accept-Encoding', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
- body={"access_token":"BQBXKUEcSFRYFvgUkIBAxGiQD0qb0t87cCGXZ6M0xRhVfiE6XHLZa84-aWXlyN4-DumspJ3-zDkcyI7foC0","token_type":"Bearer","expires_in":3600,"scope":""} 
- </msg>
-<msg timestamp="20210220 17:09:18.447" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20210220 17:09:18.380" endtime="20210220 17:09:18.447"></status>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<arguments>
-<arg>7o2CTH4ctstm8TNelqjb51</arg>
-</arguments>
-<assign>
-<var>${track_id}</var>
-</assign>
-<msg timestamp="20210220 17:09:18.448" level="INFO">${track_id} = 7o2CTH4ctstm8TNelqjb51</msg>
-<status status="PASS" starttime="20210220 17:09:18.448" endtime="20210220 17:09:18.448"></status>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<arguments>
-<arg>Bearer ${resp.json()["access_token"]}</arg>
-</arguments>
-<assign>
-<var>${bearer}</var>
-</assign>
-<msg timestamp="20210220 17:09:18.449" level="INFO">${bearer} = Bearer BQBXKUEcSFRYFvgUkIBAxGiQD0qb0t87cCGXZ6M0xRhVfiE6XHLZa84-aWXlyN4-DumspJ3-zDkcyI7foC0</msg>
-<status status="PASS" starttime="20210220 17:09:18.448" endtime="20210220 17:09:18.449"></status>
-</kw>
-<kw name="Create Dictionary" library="BuiltIn">
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<arguments>
-<arg>Authorization=${bearer}</arg>
-</arguments>
-<assign>
-<var>${headers}</var>
-</assign>
-<msg timestamp="20210220 17:09:18.449" level="INFO">${headers} = {'Authorization': 'Bearer BQBXKUEcSFRYFvgUkIBAxGiQD0qb0t87cCGXZ6M0xRhVfiE6XHLZa84-aWXlyN4-DumspJ3-zDkcyI7foC0'}</msg>
-<status status="PASS" starttime="20210220 17:09:18.449" endtime="20210220 17:09:18.449"></status>
-</kw>
-<kw name="Get On Session" library="RequestsLibrary">
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<arguments>
-<arg>spotifyGETDATA</arg>
-<arg>/tracks/${track_id}</arg>
-<arg>headers=${headers}</arg>
-</arguments>
-<assign>
-<var>${resp}</var>
-</assign>
-<msg timestamp="20210220 17:09:18.527" level="INFO">GET Request : url=https://api.spotify.com/v1/tracks/7o2CTH4ctstm8TNelqjb51 
- path_url=/v1/tracks/7o2CTH4ctstm8TNelqjb51 
- headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer BQBXKUEcSFRYFvgUkIBAxGiQD0qb0t87cCGXZ6M0xRhVfiE6XHLZa84-aWXlyN4-DumspJ3-zDkcyI7foC0'} 
- body=None 
- </msg>
-<msg timestamp="20210220 17:09:18.527" level="INFO">GET Response : url=https://api.spotify.com/v1/tracks/7o2CTH4ctstm8TNelqjb51 
- status=200, reason=OK 
- headers={'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=78531', 'x-robots-tag': 'noindex, nofollow', 'access-control-allow-origin': '*', 'access-control-allow-headers': 'Accept, App-Platform, Authorization, Content-Type, Origin, Retry-After, Spotify-App-Version, X-Cloud-Trace-Context, client-token, content-access-token', 'access-control-allow-methods': 'GET, POST, OPTIONS, PUT, DELETE, PATCH', 'access-control-allow-credentials': 'true', 'access-control-max-age': '604800', 'content-encoding': 'gzip', 'strict-transport-security': 'max-age=31536000', 'x-content-type-options': 'nosniff', 'date': 'Sat, 20 Feb 2021 16:09:17 GMT', 'server': 'envoy', 'Via': 'HTTP/2 edgeproxy, 1.1 google', 'Alt-Svc': 'clear', 'Transfer-Encoding': 'chunked'} 
- body={
-  "album" : {
-    "album_type" : "album",
-    "artists" : [ {
-      "external_urls" : {
-        "spotify" : "https://open.spotify.com/artist/3qm84nBOXUEQ2vnTfUTTFC"
-      },
-      "href" : "https://api.spotify.com/v1/artists/3qm84nBOXUEQ2vnTfUTTFC",
-      "id" : "3qm84nBOXUEQ2vnTfUTTFC",
-      "name" : "Guns N' Roses",
-      "type" : "artist",
-      "uri" : "spotify:artist:3qm84nBOXUEQ2vnTfUTTFC"
-    } ],
-    "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KR", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "UY", "VN", "XK", "ZA" ],
-    "external_urls" : {
-      "spotify" : "https://open.spotify.com/album/3I9Z1nDCL4E0cP62flcbI5"
-    },
-    "href" : "https://api.spotify.com/v1/albums/3I9Z1nDCL4E0cP62flcbI5",
-    "id" : "3I9Z1nDCL4E0cP62flcbI5",
-    "images" : [ {
-      "height" : 640,
-      "url" : "https://i.scdn.co/image/ab67616d0000b27368384dd85fd5e95831252f60",
-      "width" : 640
-    }, {
-      "height" : 300,
-      "url" : "https://i.scdn.co/image/ab67616d00001e0268384dd85fd5e95831252f60",
-      "width" : 300
-    }, {
-      "height" : 64,
-      "url" : "https://i.scdn.co/image/ab67616d0000485168384dd85fd5e95831252f60",
-      "width" : 64
-    } ],
-    "name" : "Appetite For Destruction",
-    "release_date" : "1987-07-21",
-    "release_date_precision" : "day",
-    "total_tracks" : 12,
-    "type" : "album",
-    "uri" : "spotify:album:3I9Z1nDCL4E0cP62flcbI5"
-  },
-  "artists" : [ {
-    "external_urls" : {
-      "spotify" : "https://open.spotify.com/artist/3qm84nBOXUEQ2vnTfUTTFC"
-    },
-    "href" : "https://api.spotify.com/v1/artists/3qm84nBOXUEQ2vnTfUTTFC",
-    "id" : "3qm84nBOXUEQ2vnTfUTTFC",
-    "name" : "Guns N' Roses",
-    "type" : "artist",
-    "uri" : "spotify:artist:3qm84nBOXUEQ2vnTfUTTFC"
-  } ],
-  "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KR", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "UY", "VN", "XK", "ZA" ],
-  "disc_number" : 1,
-  "duration_ms" : 354520,
-  "explicit" : false,
-  "external_ids" : {
-    "isrc" : "USGF18714809"
-  },
-  "external_urls" : {
-    "spotify" : "https://open.spotify.com/track/7o2CTH4ctstm8TNelqjb51"
-  },
-  "href" : "https://api.spotify.com/v1/tracks/7o2CTH4ctstm8TNelqjb51",
-  "id" : "7o2CTH4ctstm8TNelqjb51",
-  "is_local" : false,
-  "name" : "Sweet Child O' Mine",
-  "popularity" : 80,
-  "preview_url" : null,
-  "track_number" : 9,
-  "type" : "track",
-  "uri" : "spotify:track:7o2CTH4ctstm8TNelqjb51"
-} 
- </msg>
-<msg timestamp="20210220 17:09:18.527" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20210220 17:09:18.450" endtime="20210220 17:09:18.527"></status>
-</kw>
-<kw name="${artist} IN [ @{resp.json()[&quot;artists&quot;]} ]" type="for">
-<kw name="${artist} = {'external_urls': {'spotify': 'https://open.spotify.com/artist/3qm84nBOXUEQ2vnTfUTTFC'}, 'href': 'https://api.spotify.com/v1/artists/3qm84nBOXUEQ2vnTfUTTFC', 'id': '3qm84nBOXUEQ2vnTfUTTFC', 'name': &quot;G..." type="foritem">
-<kw name="Append To List" library="Collections">
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<arguments>
-<arg>${list_of_artists}</arg>
-<arg>${artist["name"]}</arg>
-</arguments>
-<status status="PASS" starttime="20210220 17:09:18.528" endtime="20210220 17:09:18.528"></status>
+<msg timestamp="20210302 17:42:45.655" level="INFO">${var} = 0</msg>
+<status status="PASS" starttime="20210302 17:42:45.621" endtime="20210302 17:42:45.655"></status>
 </kw>
 <kw name="Log To Console" library="BuiltIn">
 <doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>${list_of_artists}</arg>
+<arg>${var}</arg>
 </arguments>
-<status status="PASS" starttime="20210220 17:09:18.529" endtime="20210220 17:09:18.529"></status>
+<status status="PASS" starttime="20210302 17:42:45.656" endtime="20210302 17:42:45.657"></status>
 </kw>
-<kw name="Log To Console" library="BuiltIn">
-<doc>Logs the given message to the console.</doc>
-<arguments>
-<arg>******</arg>
-</arguments>
-<status status="PASS" starttime="20210220 17:09:18.529" endtime="20210220 17:09:18.529"></status>
-</kw>
-<status status="PASS" starttime="20210220 17:09:18.528" endtime="20210220 17:09:18.529"></status>
-</kw>
-<status status="PASS" starttime="20210220 17:09:18.528" endtime="20210220 17:09:18.529"></status>
-</kw>
-<kw name="Should Contain" library="BuiltIn">
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<arguments>
-<arg>${list_of_artists}</arg>
-<arg>Guns Ns Roses</arg>
-</arguments>
-<msg timestamp="20210220 17:09:18.530" level="FAIL">'["Guns N' Roses"]' does not contain 'Guns Ns Roses'</msg>
-<status status="FAIL" starttime="20210220 17:09:18.530" endtime="20210220 17:09:18.530"></status>
-</kw>
-<status status="FAIL" starttime="20210220 17:09:18.377" endtime="20210220 17:09:18.531" critical="yes">'["Guns N' Roses"]' does not contain 'Guns Ns Roses'</status>
+<status status="PASS" starttime="20210302 17:42:42.847" endtime="20210302 17:42:45.657" critical="yes"></status>
 </test>
-<status status="FAIL" starttime="20210220 17:09:18.105" endtime="20210220 17:09:18.532"></status>
+<status status="PASS" starttime="20210302 17:42:42.513" endtime="20210302 17:42:45.660"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="1">Critical Tests</stat>
-<stat pass="1" fail="1">All Tests</stat>
+<stat pass="1" fail="0">Critical Tests</stat>
+<stat pass="1" fail="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="1" fail="0">get</stat>
 </tag>
 <suite>
-<stat pass="1" fail="1" id="s1" name="RF with XML">RF with XML</stat>
+<stat pass="1" fail="0" id="s1" name="Test Selenium">Test Selenium</stat>
 </suite>
 </statistics>
 <errors>
+<msg timestamp="20210302 17:42:42.845" level="ERROR">Error in file 'C:\Users\aldo-\OneDrive\job\RobotFramework\test_selenium.robot' on line 3: Importing test library 'Selenium.webdriver.common.by' failed: ModuleNotFoundError: No module named 'Selenium'
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  C:\Users\aldo-\AppData\Local\Programs\Python\Python39-32\Scripts\robot.exe
+  c:\users\aldo-\appdata\local\programs\python\python39-32\python39.zip
+  c:\users\aldo-\appdata\local\programs\python\python39-32\DLLs
+  c:\users\aldo-\appdata\local\programs\python\python39-32\lib
+  c:\users\aldo-\appdata\local\programs\python\python39-32
+  C:\Users\aldo-\AppData\Roaming\Python\Python39\site-packages
+  c:\users\aldo-\appdata\local\programs\python\python39-32\lib\site-packages
+  c:\users\aldo-\appdata\local\programs\python\python39-32\lib\site-packages\win32
+  c:\users\aldo-\appdata\local\programs\python\python39-32\lib\site-packages\win32\lib
+  c:\users\aldo-\appdata\local\programs\python\python39-32\lib\site-packages\Pythonwin</msg>
 </errors>
 </robot>
