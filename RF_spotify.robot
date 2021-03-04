@@ -12,7 +12,7 @@ ${user_ID}  makeevolution
 #Invalid ID used for test case 2-4 below that should give a fail result
 ${invalid_ID}   maekevolution
 #Supply unique token, request this from Spotify API
-${token}    BQAmn606wkt9jQoJWymrgjsjT2uDkxPQzmbS5I_WHF63tJgTTshxoIJ9bV_ny87JQ1qJyhDkljIbVL1wCSlltxey0v4RCa4MGYJj0yCiAsDD5tqRL-WVnTu31-9ciQE1ZkaHldti0nudny6lUlSX1DPS01bxyKIS93U_ACFG6QIIM0yRiRuMhtDDWIExfB0TcGK_RuKx7cOR5O9NncBqiwdc7lPtEw8F9QQT6IuVYzJD17cS_dH6io3odkkYmfwJ_HH4_9fu9V-titpF_cmYDaQvAy6-
+${token}    BQACmxFiSeYbzdaDu1LxmEe5s4DSRGV9G4jIcvOMy09K0GdNd097nIWZEFaw4uWiInURxw8QSB0MnRWSbPZKHudm7BblTAv2xK9co8j4ao0KTtq9D15YDqi2eHx9fCCPOuJtF24kAYF9xdtYvHawnKp9jfdBscEvt_etG8FIQNKKWjqnp2vwZXFWpsuhFM4-o3wo304gqhz8ow77RJP3BjViKOdpUyBZAcpi3AqDtZuXi42sTAEjbSACWuFIfu2jKVfTFM-gA9G9MM-VvU70Y8EyVyyu
 #Name of new playlist
 ${playlist_name}=   RobotFrameworkPlaylist
 #Song to be added
@@ -72,6 +72,7 @@ Add song to the playlist
     ${resp}=          Post On Session     spotifyAddSongToPlaylist   /tracks?uris\=spotify%3Atrack%3A${wanted_song}   headers=${headers}
 
 Check that the newly added song is in the playlist
+    ${playlist_ID}=     Get ID of newly added playlist
     &{headers}=       Create dictionary   Authorization=Bearer ${token} Content-Type: application/json
     Create Session      spotifyGetSongsInPlaylist     https://api.spotify.com/v1/playlists/${playlist_ID}    disable_warnings=1
     ${resp2}    get on session  spotifyGetSongsInPlaylist    /tracks     headers=${headers}
