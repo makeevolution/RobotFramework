@@ -7,7 +7,7 @@ Library     SeleniumLibrary
 Library     OperatingSystem
 
 *** Variables ***
-#User ID1123
+#User ID
 ${user_ID}  makeevolution
 #Invalid ID used for test case 2-4 below that should give a fail result
 ${invalid_ID}   maekevolution
